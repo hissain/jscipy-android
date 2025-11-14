@@ -8,7 +8,7 @@ The `jSciPy` library provides scientific computing functionalities, mirroring th
 
 ### Demonstrated Modules from `jSciPy.signal`
 
--   **PeakFinder**: This module is utilized for robust detection of peaks within a given one-dimensional signal. The demonstration in `MainActivity.kt` illustrates how to identify local maxima based on configurable parameters such as `distance` (minimum number of samples between peaks) and `height` (required amplitude of peaks). This is crucial for applications requiring event detection or feature extraction from time-series data.
+-   **FindPeaks**: This module is utilized for robust detection of peaks within a given one-dimensional signal. The demonstration in `MainActivity.kt` illustrates how to identify local maxima based on configurable parameters such as `distance` (minimum number of samples between peaks) and `height` (required amplitude of peaks). This is crucial for applications requiring event detection or feature extraction from time-series data.
 
 -   **ButterworthFilter**: Implements a Butterworth digital filter, a type of signal processing filter designed to have a maximally flat frequency response in the passband. The `MainActivity.kt` example showcases the `filtfilt` method, which applies a zero-phase digital filter by filtering the signal in both forward and reverse directions. This effectively eliminates phase distortion introduced by the filter, making it suitable for precise signal conditioning. Parameters such as `sampleRate`, `cutoff` frequency, and filter `order` are demonstrated.
 
@@ -45,7 +45,7 @@ To build and run this project, you will need Android Studio and the Android SDK 
     git clone https://github.com/hissain/jscipy-android.git
     ```
 2.  **Open in Android Studio**: Launch Android Studio and open the cloned project. Gradle will automatically sync dependencies.
-3.  **Build and Run**: Build the project and deploy it to an Android emulator or a physical device. The application will launch, displaying a simple UI that visually demonstrates the `PeakFinder`, `ButterworthFilter`, and `RK4Solver` functionalities with example data and their respective outputs.
+3.  **Build and Run**: Build the project and deploy it to an Android emulator or a physical device. The application will launch, displaying a simple UI that visually demonstrates the `FindPeaks`, `ButterworthFilter`, and `RK4Solver` functionalities with example data and their respective outputs.
 
 ## Screenshot
 

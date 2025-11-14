@@ -52,12 +52,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun FindPeaksDemo() {
     val signal = doubleArrayOf(0.0, 1.0, 0.5, 2.0, 1.5, 3.0, 2.5, 0.0)
-    val peakFinder: IFindPeaks = FindPeaks()
+    val findPeaks: IFindPeaks = FindPeaks()
     val params = FindPeaks.PeakParams().apply {
         distance = 1
         height = 1.0
     }
-    val result = peakFinder.findPeaks(signal, params)
+    val result = findPeaks.findPeaks(signal, params)
 
     Text("\nFindPeaks Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Signal: ${signal.contentToString()}")
