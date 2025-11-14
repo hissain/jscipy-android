@@ -51,7 +51,7 @@ To build and run this project, you will need Android Studio and the Android SDK 
 
 Here's a screenshot of the application in action, illustrating the output of the `jSciPy` demos:
 
-![App Screenshot](figs/AppScreen.png)
+<img src="figs/AppScreen.png" width="350">
 
 ## License
 
