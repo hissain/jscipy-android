@@ -13,10 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hissain.jscipy.signal.PeakFinder
+import com.hissain.jscipy.signal.FindPeaks
 import com.hissain.jscipy.signal.ButterworthFilter
 import com.hissain.jscipy.signal.RK4Solver
-import com.hissain.jscipy.signal.api.IPeakFinder
+import com.hissain.jscipy.signal.api.IFindPeaks
 import com.hissain.jscipy.signal.api.IButterworthFilter
 import com.hissain.jscipy.signal.api.IRK4Solver
 import com.hissain.samplejscipyapp.ui.theme.SampleJscipyAppTheme
@@ -34,8 +34,8 @@ class MainActivity : ComponentActivity() {
                         Text("jSciPy Library Demo", style = MaterialTheme.typography.headlineMedium)
                         Text("--------------------", style = MaterialTheme.typography.headlineSmall)
 
-                        // PeakFinder Demo
-                        PeakFinderDemo()
+                        // FindPeaks Demo
+                        FindPeaksDemo()
 
                         // ButterworthFilter Demo
                         ButterworthFilterDemo()
@@ -50,16 +50,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PeakFinderDemo() {
+fun FindPeaksDemo() {
     val signal = doubleArrayOf(0.0, 1.0, 0.5, 2.0, 1.5, 3.0, 2.5, 0.0)
-    val peakFinder: IPeakFinder = PeakFinder()
-    val params = PeakFinder.PeakParams().apply {
+    val peakFinder: IFindPeaks = FindPeaks()
+    val params = FindPeaks.PeakParams().apply {
         distance = 1
         height = 1.0
     }
     val result = peakFinder.findPeaks(signal, params)
 
-    Text("\nPeakFinder Demo:", style = MaterialTheme.typography.titleMedium)
+    Text("\nFindPeaks Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Signal: ${signal.contentToString()}")
     Text("Peaks found at indices: ${result.peaks.contentToString()}")
 }
@@ -102,7 +102,7 @@ fun DefaultPreview() {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("jSciPy Library Demo", style = MaterialTheme.typography.headlineMedium)
             Text("--------------------", style = MaterialTheme.typography.headlineSmall)
-            PeakFinderDemo()
+            FindPeaksDemo()
             ButterworthFilterDemo()
             RK4SolverDemo()
         }
