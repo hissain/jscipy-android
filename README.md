@@ -35,6 +35,10 @@ The app displays a scrollable list of demos, each showing input data and the pro
 *   `com.hissain.jscipy:jscipy:2.0.1` (Local Maven / JitPack)
 *   Jetpack Compose for UI
 
+## Screenshot
+
+<img src="figs/AppScreenshot.png" width="350">
+
 ## License
 
 Apache License 2.0
