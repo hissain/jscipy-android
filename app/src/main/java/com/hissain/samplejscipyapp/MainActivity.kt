@@ -15,9 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hissain.jscipy.signal.Signal
+import com.hissain.jscipy.Signal
 import com.hissain.jscipy.signal.fft.FFT
-import com.hissain.jscipy.signal.math.RK4Solver
+import com.hissain.jscipy.math.RK4Solver
+import com.hissain.jscipy.Math as SciMath
 import com.hissain.samplejscipyapp.ui.theme.SampleJscipyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +47,9 @@ class MainActivity : ComponentActivity() {
                         FFTDemo()
                         InterpolationDemo()
                         SavitzkyGolayDemo()
+                        PeriodogramDemo()
+                        SpectrogramDemo()
+                        FFT2Demo()
                     }
                 }
             }
@@ -56,7 +60,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun FindPeaksDemo() {
     val signal = doubleArrayOf(0.0, 1.0, 0.5, 2.0, 1.5, 3.0, 2.5, 0.0)
-    val peaks = Signal.find_peaks(signal, 1.0, 1, null)
+    val peaks = Signal.find_peaks(signal, 1.0, 1, Double.NaN)
 
     Text("\nFindPeaks Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Signal: ${signal.contentToString()}")
@@ -108,7 +112,7 @@ fun RK4SolverDemo() {
 fun ResampleDemo() {
     val signal = doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0)
     val num = 10
-    val resampled = Signal.resample(signal, num)
+    val resampled = SciMath.resample(signal, num)
     
     Text("\nResample Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Original (len=${signal.size}): ${signal.contentToString()}")
@@ -131,7 +135,7 @@ fun InterpolationDemo() {
     val x = doubleArrayOf(0.0, 1.0, 2.0)
     val y = doubleArrayOf(0.0, 10.0, 0.0)
     val newX = doubleArrayOf(0.5, 1.5)
-    val interp = Signal.interp1d_linear(x, y, newX)
+    val interp = SciMath.interp1d_linear(x, y, newX)
     
     Text("\nInterpolation Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Linear interp at 0.5, 1.5: ${interp.map { "%.2f".format(it) }}")
@@ -140,10 +144,60 @@ fun InterpolationDemo() {
 @Composable
 fun SavitzkyGolayDemo() {
     val signal = doubleArrayOf(0.0, 1.0, 2.0, 3.0, 2.0, 1.0, 0.0)
-    val smoothed = Signal.savgol_filter(signal, 5, 2)
+    val smoothed = Signal.savgol_filter(signal, 5, 2, 0, 1.0)
     
     Text("\nSavitzky-Golay Demo:", style = MaterialTheme.typography.titleMedium)
     Text("Smoothed: ${smoothed.take(5).map { "%.2f".format(it) }}...")
+}
+
+@Composable
+fun PeriodogramDemo() {
+    val fs = 1000.0
+    val N = 1000
+    val signal = DoubleArray(N) { i -> 
+        Math.sin(2 * Math.PI * 50 * i / fs) + // 50 Hz
+        Math.sin(2 * Math.PI * 120 * i / fs) // 120 Hz
+    }
+    
+    val result = Signal.periodogram(signal, fs)
+    
+    Text("\nPeriodogram Demo:", style = MaterialTheme.typography.titleMedium)
+    var maxPower = -1.0
+    var maxFreq = 0.0
+    for(i in result.frequencies.indices) {
+        if(result.psd[i] > maxPower) {
+            maxPower = result.psd[i]
+            maxFreq = result.frequencies[i]
+        }
+    }
+    Text("Dominant freq: %.1f Hz".format(maxFreq))
+}
+
+@Composable
+fun SpectrogramDemo() {
+    val fs = 1000.0
+    val N = 1000
+    val signal = DoubleArray(N) { i -> 
+        // Chirp signal
+        val t = i / fs
+        Math.sin(2 * Math.PI * 100 * t * t)
+    }
+    
+    val result = Signal.spectrogram(signal, fs)
+    
+    Text("\nSpectrogram Demo:", style = MaterialTheme.typography.titleMedium)
+    Text("Time segments: ${result.times.size}")
+    Text("Freq bins: ${result.frequencies.size}")
+}
+
+@Composable
+fun FFT2Demo() {
+    val size = 5
+    val input = Array(size) { DoubleArray(size) { 1.0 } }
+    val result = FFT().fft2(input)
+    
+    Text("\n2D FFT Demo:", style = MaterialTheme.typography.titleMedium)
+    Text("DC Component: %.2f+j%.2f".format(result[0][0].real, result[0][0].imag))
 }
 
 @Preview(showBackground = true)

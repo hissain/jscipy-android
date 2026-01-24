@@ -6,6 +6,11 @@ This Android application demonstrates the capabilities of the `jSciPy` library, 
 
 This app provides interactive examples for the following `jSciPy` modules:
 
+### Spectral Analysis (New)
+*   **Periodogram**: Power Spectral Density estimation.
+*   **Spectrogram**: Time-frequency analysis.
+*   **2D FFT**: Two-dimensional Fast Fourier Transform.
+
 ### Filters
 *   **Butterworth Filter**: Low-pass, high-pass, band-pass, and band-stop filtering (including zero-phase `filtfilt`).
 *   **Chebyshev Filters**: Type I and Type II filters with ripple/attenuation control.
@@ -32,7 +37,7 @@ The app displays a scrollable list of demos, each showing input data and the pro
 
 ## Dependencies
 
-*   `com.hissain.jscipy:jscipy:2.0.1` (Local Maven / JitPack)
+*   `com.hissain.jscipy:jscipy:3.1.3` (Included in `app/libs`)
 *   Jetpack Compose for UI
 
 ## Screenshot
